@@ -10,7 +10,8 @@ class Animal
   end
 
   def to_s
-    "#{@name}'s profile:\n Is a #{@gender} #{@species} aged #{@age} who has the following toys: #{@toys}"
+    "#{@name}'s profile:\n
+    Is a #{@gender} #{@species} aged #{@age} who has the following toys: #{@toys}"
   end
 
 end
