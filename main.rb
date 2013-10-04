@@ -3,11 +3,7 @@ require_relative 'shelter'
 require_relative 'client'
 require_relative 'animal'
 
-
-  def do_initialize
-    $shelter = Shelter.new
-    get_input
-  end
+  $shelter = Shelter.new
 
   def get_input
     print "What would you like to do?\n
@@ -26,7 +22,6 @@ require_relative 'animal'
     when 1
       create_client
       display_client
-      binding.pry
     when 2
       create_animal
     when 3
@@ -132,7 +127,7 @@ require_relative 'animal'
     #animal should be assigned to a client
     animal.owner = client
     #remove shelter association
-    shelter.animals.delete(chosen_animal)
+    $shelter.animals.delete(chosen_animal)
   end
 
   def up_for_adoption
@@ -158,27 +153,4 @@ require_relative 'animal'
 
   end
 
-do_initialize
-=begin
-  #create instance of shelter
-  shelter1 = Shelter.new
-
-  #create instance of animal
-  animal1 = Animal. new
-
-  #setup animal
-  animal1.name = "Fido"
-  animal1.age = 2
-  animal1.gender = "male"
-  animal1.species = "Alsatian"
-  animal1.toys = ["tennis ball", "blanky", "stick"]
-
-  #linkages
-  #link animal to shelter
-  shelter1.animals << animal1
-
-  #link client to shelter
-  shelter1.clients << client1
-
-  puts shelter1.to_s
-=end
+get_input
