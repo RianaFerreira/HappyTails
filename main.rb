@@ -17,8 +17,32 @@ end
 def process_request(menu_selection)
   case menu_selection
   when 1
+    #prompt them for the client information
+    puts "Enter client information"
+
+    puts "Name"
+    name = gets.chomp
+
+    puts "Age"
+    age = gets.chomp.to_i
+
+    puts "Number of children"
+    num_children = gets.chomp.to_i
+
+    puts "Number of pets"
+    num_pets = gets.chomp
+
+    #create instance of client
+    client_"#{name}" = Client.new
+
+    #setup client
+    client_"#{name}".name = name
+    client_"#{name}".age = age
+    client_"#{name}".num_children = num_children
+    client_"#{name}".num_pets = num_pets
 
   when 2
+
 
   when 3
 
@@ -46,15 +70,6 @@ animal1.age = 2
 animal1.gender = "male"
 animal1.species = "Alsatian"
 animal1.toys = ["tennis ball", "blanky", "stick"]
-
-#create instance of client
-client1 = Client.new
-
-#setup client
-client1.name = "Mr Rogers"
-client1.num_children = 2
-client1.age = 40
-client1.num_pets = 1
 
 #linkages
 #link animal to shelter
