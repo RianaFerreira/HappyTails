@@ -26,14 +26,10 @@ require_relative 'animal'
     case menu_selection
     when 1
       create_client
-      display_client
     when 2
       create_animal
-      display_animal
     when 3
       adopt_animal
-      display_animal
-      display_client
     when 4
       up_for_adoption
       display_animal
@@ -130,19 +126,20 @@ require_relative 'animal'
       puts "Animal #{new_animal.name} successfully added."
       return new_animal
   end
+
   def display_animal
     #display all animals linked to a shelter
-    if $shelter.animals.size > 0
-      $shelter.animals.each {|key,value| puts value}
+    if $shelter.animals.empty?
+      puts "HappiTails has no animals available for adoption!"
     else
-      print "HappiTails has no animals available for adoption!"
+      $shelter.animals.each {|key,value| puts value}
     end
   end
+
   def display_client
     #display all clients linked to a shelter
     $shelter.clients.each{|animal,value| puts value}
   end
-
 
   def adopt_animal
     #show animals available for adoption
@@ -153,51 +150,38 @@ require_relative 'animal'
     chosen_animal = gets.chomp
     #find chosen animal in the hash of animals linked to the shelter
     chosen_animal = $shelter.animals[chosen_animal]
-
     #show clients who can adopt a pet
     puts "Clients who are able to adopt #{chosen_animal.name}"
     display_client
     #prompt user to select a client who is adopting a pet
     print "Enter name of client or 'Add' to create a new client for the adoption: "
-    chosen_client = gets.chomp.downcase
+    chosen_client = gets.chomp
+
     #if the client doesn't exist, redirect user to the create_client method and return the new client object
-    if chosen_client == "add"
+    if chosen_client == "Add"
       chosen_client = create_client
     else
       #find chosen client in the hash of clients linked to the shelter
       chosen_client = $shelter.clients[chosen_client]
     end
+
     #animal should have a link to a client
     chosen_animal.owner = chosen_client.name
     #animal should be assigned to a client
     chosen_client.animals[chosen_animal.name] = chosen_animal
     #remove shelter association
     $shelter.animals.delete(chosen_animal.name)
-    binding.pry
+    puts "#{chosen_animal.name} has found a loving home with #{chosen_client.name} :)"
   end
 
-
   def up_for_adoption
-    #add new animal
-    add_animal = create_animal
-    #display existing clients
-    puts "Setup the client for the adoption:\n
-          (1) New client\n
-          (2) Select existing client"
-    response = gets.chomp.to_i
-    case response
-      when 1
-        create_client
-      when 2
-        display_client
-        puts "Enter the clients name:"
-        existing_client = gets.chomp.downcase.gsub(" ","")
-        #associate animal with shelter
-        client.animals.delete(add_animal)
-      else
-        puts "Please pick option 1 or 2"
-      end
-
+    #no need to capture the person who is giving up the animal as a client
+    #create the animal that the shelter is taking in
+    new_animal = create_animal
+    new_animal.owner = "HappiTails"
+    #link the animal to the shelter
+    $shelter.animals[new_animal.name] = new_animal
+    puts "Welcome to HappiTails #{new_animal.name} we'll find you a loving home soon!"
   end
 
 get_input
